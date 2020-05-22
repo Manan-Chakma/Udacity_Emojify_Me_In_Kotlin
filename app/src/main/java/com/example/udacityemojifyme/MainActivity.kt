@@ -35,8 +35,10 @@ import kotlinx.coroutines.Dispatchers.IO
 import java.io.File
 import java.io.IOException
 
+
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var mFinalBitmap: Bitmap
     private lateinit var mImageView: ImageView
     private lateinit var mCloseButton: FloatingActionButton
     private lateinit var mSaveButton: FloatingActionButton
@@ -231,9 +233,27 @@ class MainActivity : AppCompatActivity() {
 
     private fun processAndSetImage() {
         mResultsBitmap = BitMapUtils.resamplePic(this, mTempPhotoPath)
-        mResultsBitmap = Emojifier.detectFaceAndOverlay(this, mResultsBitmap)
         mViewModel.setState(1)
         mImageView.setImageBitmap(mResultsBitmap)
+        CoroutineScope(IO).launch {
+            mFinalBitmap = async { getFinalImage(mResultsBitmap) }.await()
+            Log.d(MY_TAG, "STEP Completed")
+            mImageView.setImageBitmap(mFinalBitmap)
+        }
+
+
+        // mResultsBitmap = BitMapUtils.resamplePic(this, mTempPhotoPath)
+        // mResultsBitmap = Emojifier.detectFaceAndOverlay(this, mResultsBitmap)
+        //mViewModel.setState(1)
+        //mImageView.setImageBitmap(mResultsBitmap)
+    }
+
+    private fun getFinalImage(mBit: Bitmap): Bitmap {
+        return Emojifier.detectFaceAndOverlay(this, mBit)
+    }
+
+    private fun getResampledBitmap(): Bitmap {
+        return BitMapUtils.resamplePic(this, mTempPhotoPath)
     }
 
 
