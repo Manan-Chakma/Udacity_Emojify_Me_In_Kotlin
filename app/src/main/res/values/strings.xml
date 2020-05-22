@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Udacity Emojify Me</string>
+    <string name="captured_image">captured_image</string>
+    <string name="emojify_me">Emojify Me</string>
+    <string name="camera_access_denied">Camera Access Denied</string>
+    <string name="write_access_denied">Write Permission Denied</string>
+    <string name="img_file_delete_error">Something went wrong in deleting file</string>
+    <string name="img_file_delete_success">Successfully Deleted</string>
+    <string name="no_face_detected">No Face Detected</string>
+    <string name="img_saved_msg">Image Saved</string>
+    <string name="no_emoji">No Emoji Matches</string>
+
+</resources>
